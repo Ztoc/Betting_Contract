@@ -1,27 +1,28 @@
 "use client";
 
-import { useEffect } from "react";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { useAccount, useDisconnect } from "wagmi";
-import "dotenv/config";
+import { useAccount, useReadContract } from "wagmi";
+import BettingContract from "./lib/BettingContract.json";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+  const data = useReadContract({
+    address: "0x714BC266E77ccC6506bFCE9D92bb1974Fa98E624",
+    abi: BettingContract.abi,
+    functionName: "owner",
+  });
   const { address } = useAccount();
-  useEffect(() => {
-    console.log(process.env.DEPLOYER);
-    if (address == process.env.DEPLOYER) {
-      console.log("dd");
-    }
-  }, [address]);
 
-  console.log(address);
+  if (address) {
+    if (address == data.data) {
+      router.push("/bet/admin");
+    } else {
+      router.push("/bet/user");
+    }
+  }
+
   return (
-    <div className="h-screen w-screen flex flex-col">
-      <div className="h-20 border-b border-b-slate-500 p-5 flex items-center justify-end">
-        <div>
-          <ConnectButton />
-        </div>
-      </div>
+    <>
       <div className="flex-1 flex items-center justify-center">
         <div className=" basis-2/3 flex flex-col items-center gap-y-5">
           <h1 className="text-6xl">Welcome to Betting</h1>
@@ -40,6 +41,6 @@ export default function Home() {
           </ol>
         </div>
       </div>
-    </div>
+    </>
   );
 }
