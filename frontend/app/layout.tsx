@@ -13,8 +13,8 @@ export const metadata: Metadata = {
 
 import "@rainbow-me/rainbowkit/styles.css";
 import { Providers } from "./providers";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Toaster } from "@/components/ui/toaster";
+import Header from "@/components/Header";
 
 export default function RootLayout({
   children,
@@ -26,11 +26,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <div className="h-screen w-screen flex flex-col">
-            <div className="h-20 border-b border-b-slate-500 p-5 flex items-center justify-end">
-              <div>
-                <ConnectButton />
-              </div>{" "}
-            </div>
+            <Header />
             {children}
           </div>
           <Toaster />

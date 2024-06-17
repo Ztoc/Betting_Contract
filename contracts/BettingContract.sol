@@ -84,7 +84,6 @@ contract BettingContract {
         }
 
         if (totalWinningBets > 0) {
-            // Distribute rewards to winners
             for (uint256 i = 0; i < betters.length; i++) {
                 if (bets[betters[i]].number == _winningNumber) {
                     uint256 reward = (bets[betters[i]].amount *
@@ -94,10 +93,8 @@ contract BettingContract {
             }
         }
 
-        // Transfer fee to the owner
         owner.transfer(ownerTotalFee);
 
-        // Clear all bets and reset total bet amount
         for (uint256 i = 0; i < betters.length; i++) {
             delete bets[betters[i]];
         }

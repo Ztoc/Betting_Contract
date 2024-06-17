@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useReadContract, useWatchContractEvent, useWriteContract } from "wagmi";
 import BettingContract from "../../lib/BettingContract.json";
 import { useToast } from "@/components/ui/use-toast";
+import { ethers } from "ethers";
 
 const Adminpage = () => {
   const { toast } = useToast();
@@ -68,7 +69,7 @@ const Adminpage = () => {
       });
     },
   });
-
+  console.log(betters);
   const startBetting = () => {
     if (bettingOpen) {
       toast({
@@ -127,7 +128,7 @@ const Adminpage = () => {
               </div>
               <div className="flex gap-x-4">
                 <label>Total Amounts:</label>
-                {amounts || "0"}
+                {(amounts && ethers.formatEther(amounts)) || "0"} eth
               </div>
               {winning > 0 && (
                 <div className="flex gap-x-4">
